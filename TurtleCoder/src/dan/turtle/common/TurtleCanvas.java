@@ -4,6 +4,9 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import dan.turtle.instr.FileParser;
+import dan.turtle.instr.Instruction;
+
 public class TurtleCanvas extends Canvas implements Runnable{
 	
 	private int width;
@@ -14,11 +17,20 @@ public class TurtleCanvas extends Canvas implements Runnable{
 	
 	private BufferStrategy bs;
 	
+	private Turtle turtle;
+	
+	private FileParser parser;
+	private Instruction[] program;
+	
 	public TurtleCanvas(int width, int height) {
 		this.width = width;
 		this.height = height;
 		
 		running = false;
+		turtle = new Turtle(100, 100);
+		
+		parser = new FileParser();
+		program = parser.parseInstructions("instr/test.trtl");
 		
 		start();
 	}
@@ -74,7 +86,7 @@ public class TurtleCanvas extends Canvas implements Runnable{
 		Graphics g = bs.getDrawGraphics();
 		g.clearRect(0, 0, width, height);
 		
-		g.drawRect(10, 10, 100, 100);
+		turtle.draw(g);
 		
 		g.dispose();
 		bs.show();
