@@ -6,6 +6,8 @@ import java.awt.image.BufferStrategy;
 
 import dan.turtle.instr.FileParser;
 import dan.turtle.instr.Instruction;
+import dan.turtle.instr.IntInstruction;
+import dan.turtle.instr.InstructionType;
 
 public class TurtleCanvas extends Canvas implements Runnable{
 	
@@ -38,9 +40,26 @@ public class TurtleCanvas extends Canvas implements Runnable{
 		// Creates an array of Instruction objects from the commands in the
 		// test file
 		program = FileParser.parseInstructions("instr/test.trtl");
-		turtle.setProgram(program);
-		
+		if(checkVersion(program[0])) {
+			turtle.setProgram(program);
+		}
 		start();
+	}
+	
+	// Checks if the first command in the program is a VERS command
+	// and if the code is written for the same version as the program
+	private boolean checkVersion(Instruction in) {
+		if(in.getInstructionType() == InstructionType.VERSION) {
+			if(((IntInstruction)in).getArg() == Main.compatVers) {
+				return true;
+			}else {
+				System.out.println("ERROR: Your code is not at the current compatibility version.\nGet the VERS command at the top of your code and check the GitHub to see any changes");
+				return false;
+			}
+		}else {
+			System.out.println("WARNING: Your code does not begin with a VERS command.\nYour code my have incompatibilities!");
+			return true;
+		}
 	}
 	
 	// Starts the program thread

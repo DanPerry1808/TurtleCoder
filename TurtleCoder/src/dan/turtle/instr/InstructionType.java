@@ -8,5 +8,6 @@ public enum InstructionType {
 	MOVE,
 	TURN,
 	SPEED,
-	TPEN
+	TPEN,
+	VERSION
 }

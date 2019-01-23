@@ -82,6 +82,8 @@ public class FileParser {
 			return new IntInstruction(InstructionType.SPEED, Integer.parseInt(lineParts[1]));
 		case "TPEN":
 			return new BoolInstruction(InstructionType.TPEN, Boolean.parseBoolean(lineParts[1]));
+		case "VERS":
+			return new IntInstruction(InstructionType.VERSION, Integer.parseInt(lineParts[1]));
 		default:
 			System.out.println("Error parsing line: " + line);
 			return null;

@@ -151,6 +151,9 @@ public class Turtle {
 		case TPEN:
 			setPenDown(((BoolInstruction)in).getArg());
 			break;
+		case VERSION:
+			busy = false;
+			break;
 		}
 	}
 	

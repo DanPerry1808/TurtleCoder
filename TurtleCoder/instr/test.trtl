@@ -1,4 +1,5 @@
 # Test code file
+VERS 1
 MOVE 100
 TURN -90
 MOVE 100
