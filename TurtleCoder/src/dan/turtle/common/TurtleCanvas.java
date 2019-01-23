@@ -19,9 +19,13 @@ public class TurtleCanvas extends Canvas implements Runnable{
 	
 	private Turtle turtle;
 	
-	private FileParser parser;
 	private Instruction[] program;
 	
+	/**
+	 * Main canvas object for drawing
+	 * @param width Width of canvas in pixels
+	 * @param height Height of canvas in pixels
+	 */
 	public TurtleCanvas(int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -29,20 +33,23 @@ public class TurtleCanvas extends Canvas implements Runnable{
 		running = false;
 		turtle = new Turtle(100, 100);
 		
-		parser = new FileParser();
-		program = parser.parseInstructions("instr/test.trtl");
+		// Creates an array of Instruction objects from the commands in the
+		// test file
+		program = FileParser.parseInstructions("instr/test.trtl");
 		turtle.setProgram(program);
 		
 		start();
 	}
 	
-	public void start() {
+	// Starts the program thread
+	private void start() {
 		running = true;
 		thread = new Thread(this, "TurtleCoder");
 		thread.start();
 	}
 	
-	public void stop() {
+	// Stops the program thread
+	private void stop() {
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
@@ -50,22 +57,29 @@ public class TurtleCanvas extends Canvas implements Runnable{
 		}
 	}
 	
+	/**
+	 * Main logic loop for the program, runs updates 60 times a second
+	 */
 	public void run() {
+		// Timing variables for updating
 		long lastTime = System.nanoTime();
 		final double UPS = 60.0;
 		final double UPDATE_TIME = 1000000000.0 / UPS;
 		double delta = 0;
 		
+		// Main logic loop
 		while(running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / UPDATE_TIME;
 			lastTime = now;
 			
+			// Checks if time for update
 			while(delta >= 1) {
 				turtle.update();
 				delta--;
 			}
 			
+			// Checks if canvas ready to draw yet
 			while(!isDisplayable()) {
 				try {
 					Thread.sleep(10);
@@ -73,22 +87,31 @@ public class TurtleCanvas extends Canvas implements Runnable{
 					e.printStackTrace();
 				}
 			}
+			// Calling main draw function
 			render();
 			
 		}
 		stop();
 	}
 	
+	// Main drawing function
 	private void render() {
+		
+		// Generating buffer strategy and graphics object
 		bs = getBufferStrategy();
 		if(bs == null) {
 			createBufferStrategy(3);
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
+		// Clearing screen
 		g.clearRect(0, 0, width, height);
 		
+		// DRAWING STARTS HERE
+		
 		turtle.draw(g);
+		
+		// DRAWING ENDS HERE
 		
 		g.dispose();
 		bs.show();

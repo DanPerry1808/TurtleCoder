@@ -11,12 +11,14 @@ public class Main extends JFrame{
 	public static int HEIGHT = 800;
 	
 	public Main() {
+		// Sets options for the window
 		setSize(WIDTH, HEIGHT);
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setTitle(TITLE);
+		// Adds the canvas object to the screen
 		add(new TurtleCanvas(WIDTH, HEIGHT));
 		setVisible(true);
 	}

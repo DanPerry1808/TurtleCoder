@@ -6,15 +6,25 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Class of static methods for creating lists of executable
+ * instruction objects from .trtl files
+ *
+ */
 public class FileParser {
 	
-	public FileParser() {
-	}
-	
-	public Instruction[] parseInstructions(String filepath) {
+	/**
+	 * Returns an array of Instruction object from the contents of a file
+	 * @param filepath The path to the file to be read
+	 * @return An array of Instruction objects which the turtle can run
+	 */
+	public static Instruction[] parseInstructions(String filepath) {
+		// Gets the contents of the files as a list of strings
 		ArrayList<String> lines = readInstructions(filepath);
+		// Creates new array to store instructions
 		Instruction[] instr = new Instruction[lines.size()];
 		
+		// Convert each String into an Instruction and store in arrays
 		for(int i = 0; i < instr.length; i++) {
 			instr[i] = parseLine(lines.get(i));
 		}
@@ -23,7 +33,8 @@ public class FileParser {
 		
 	}
 	
-	private ArrayList<String> readInstructions(String filepath) {
+	// Reads in a file and returns its contents as an ArrayList of Strings
+	private static ArrayList<String> readInstructions(String filepath) {
 		
 		ArrayList<String> lines = new ArrayList<String>();
 		
@@ -31,6 +42,7 @@ public class FileParser {
 			BufferedReader file = new BufferedReader(new FileReader(filepath));
 			try {
 				String line;
+				// Reads each line from the file and adds it to the ArrayList
 				while((line = file.readLine()) != null) {
 					lines.add(line);
 				}
@@ -48,16 +60,23 @@ public class FileParser {
 		
 	}
 	
-	private Instruction parseLine(String line) {
+	// Converts a string into an instruction
+	private static Instruction parseLine(String line) {
+		// Splits the line by spaces to get the different parts of the instruction
 		String[] lineParts = line.split(" ");
 		
 		// Checks through all possible instruction types
+		// lineParts[0] is the first part of the instruction
+		// A 4 character instruction code
 		switch(lineParts[0]) {
 		case "MOVF":
+			// Move forward command
 			return new IntInstruction(InstructionType.MOVE, Integer.parseInt(lineParts[1]));
 		case "TURN":
+			// Turn command
 			return new IntInstruction(InstructionType.TURN, Integer.parseInt(lineParts[1]));
 		case "SPED":
+			// Change speed command
 			return new IntInstruction(InstructionType.SPEED, Integer.parseInt(lineParts[1]));
 		default:
 			System.out.println("Error parsing line: " + line);

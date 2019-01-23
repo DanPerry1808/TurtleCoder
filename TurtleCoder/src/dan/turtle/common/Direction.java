@@ -1,11 +1,19 @@
 package dan.turtle.common;
 
+/**
+ * Enum represents the direction that the turtle is facing
+ */
 public enum Direction {
 	UP,
 	LEFT,
 	DOWN,
 	RIGHT;
 	
+	/**
+	 * Given the Direction d, returns the direction 90 degrees clockwise of it 
+	 * @param d a Direction enum
+	 * @return the Direction 90 clockwise of it
+	 */
 	public static Direction clockwise(Direction d) {
 		switch(d) {
 		case UP:
@@ -21,6 +29,11 @@ public enum Direction {
 		}
 	}
 	
+	/**
+	 * Given the Direction d, returns the direction 90 degrees anticlockwise of it 
+	 * @param d a Direction enum
+	 * @return the Direction 90 anticlockwise of it
+	 */
 	public static Direction anticlockwise(Direction d) {
 		switch(d) {
 		case UP:
