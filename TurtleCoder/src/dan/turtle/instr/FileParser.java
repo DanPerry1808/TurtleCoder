@@ -25,7 +25,7 @@ public class FileParser {
 		Instruction[] instr = new Instruction[lines.size()];
 		
 		// Convert each String into an Instruction and store in arrays
-		for(int i = 0; i < instr.length; i++) {
+		for(int i = 0; i < lines.size(); i++) {
 			instr[i] = parseLine(lines.get(i));
 		}
 		
@@ -44,7 +44,9 @@ public class FileParser {
 				String line;
 				// Reads each line from the file and adds it to the ArrayList
 				while((line = file.readLine()) != null) {
-					lines.add(line);
+					if(!line.startsWith("#")) {
+						lines.add(line);
+					}
 				}
 				
 				file.close();
@@ -69,7 +71,7 @@ public class FileParser {
 		// lineParts[0] is the first part of the instruction
 		// A 4 character instruction code
 		switch(lineParts[0]) {
-		case "MOVF":
+		case "MOVE":
 			// Move forward command
 			return new IntInstruction(InstructionType.MOVE, Integer.parseInt(lineParts[1]));
 		case "TURN":
