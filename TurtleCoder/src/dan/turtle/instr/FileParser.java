@@ -17,7 +17,6 @@ public class FileParser {
 		
 		for(int i = 0; i < instr.length; i++) {
 			instr[i] = parseLine(lines.get(i));
-			System.out.println(instr[i].toString());
 		}
 		
 		return instr;
@@ -34,7 +33,6 @@ public class FileParser {
 				String line;
 				while((line = file.readLine()) != null) {
 					lines.add(line);
-					System.out.println(line);
 				}
 				
 				file.close();

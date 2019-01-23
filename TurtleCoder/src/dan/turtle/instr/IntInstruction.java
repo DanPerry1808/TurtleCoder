@@ -9,6 +9,10 @@ public class IntInstruction extends Instruction {
 		this.arg = arg;
 	}
 	
+	public int getArg() {
+		return arg;
+	}
+	
 	public String toString() {
 		return "Instruction with 1 integer parameter:\nTYPE: " + type.toString() + "\nArgument: " + arg;
 	}

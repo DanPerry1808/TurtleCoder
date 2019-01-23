@@ -31,6 +31,7 @@ public class TurtleCanvas extends Canvas implements Runnable{
 		
 		parser = new FileParser();
 		program = parser.parseInstructions("instr/test.trtl");
+		turtle.setProgram(program);
 		
 		start();
 	}
@@ -61,6 +62,7 @@ public class TurtleCanvas extends Canvas implements Runnable{
 			lastTime = now;
 			
 			while(delta >= 1) {
+				turtle.update();
 				delta--;
 			}
 			
