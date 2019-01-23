@@ -44,33 +44,42 @@ public class Turtle {
 		// Checks turtle has instructions
 		if(program != null) {
 			if(busy) {
-				if(distanceLeft != 0) {
-					switch(dir) {
-					case LEFT:
-						x -= speed;
-						break;
-					case RIGHT:
-						x += speed;
-						break;
-					case UP:
-						y -= speed;
-						break;
-					case DOWN:
-						y += speed;
-					}
-					distanceLeft -= speed;
-					if(distanceLeft == 0) {
-						busy = false;
-					}
+				
+				if(distanceLeft >= speed) {
+					move(speed);
+				}else {
+					move(distanceLeft);
 				}
 			} else {
 				if(currInstr == program.length - 1) {
 					program = null;
 				}else {
 					currInstr++;
+					System.out.println(program[currInstr].getInstructionType());
 					runInstruction(program[currInstr]);
 				}
 			}
+		}
+	}
+	
+	private void move(int amount) {
+		switch(dir) {
+		case LEFT:
+			x -= amount;
+			break;
+		case RIGHT:
+			x += amount;
+			break;
+		case UP:
+			y -= amount;
+			break;
+		case DOWN:
+			y += amount;
+		}
+		
+		distanceLeft -= amount;
+		if(distanceLeft == 0) {
+			busy = false;
 		}
 	}
 	
@@ -78,10 +87,14 @@ public class Turtle {
 		busy = true;
 		switch(in.getInstructionType()) {
 		case MOVE:
-			move(((IntInstruction)in).getArg());
+			makeMove(((IntInstruction)in).getArg());
 			break;
 		case TURN:
 			turn(((IntInstruction)in).getArg());
+			break;
+		case SPEED:
+			setSpeed(((IntInstruction)in).getArg());
+			break;
 		}
 	}
 	
@@ -91,13 +104,14 @@ public class Turtle {
 	
 	public void setSpeed(int newSpeed) {
 		speed = newSpeed;
+		busy = false;
 	}
 	
 	public void draw(Graphics g) {
 		g.fillOval(x, y, WIDTH, WIDTH);
 	}
 	
-	private void move(int amount) {
+	private void makeMove(int amount) {
 		distanceLeft = amount;
 	}
 	

@@ -57,6 +57,8 @@ public class FileParser {
 			return new IntInstruction(InstructionType.MOVE, Integer.parseInt(lineParts[1]));
 		case "TURN":
 			return new IntInstruction(InstructionType.TURN, Integer.parseInt(lineParts[1]));
+		case "SPED":
+			return new IntInstruction(InstructionType.SPEED, Integer.parseInt(lineParts[1]));
 		default:
 			System.out.println("Error parsing line: " + line);
 			return null;
