@@ -44,7 +44,7 @@ public class FileParser {
 				String line;
 				// Reads each line from the file and adds it to the ArrayList
 				while((line = file.readLine()) != null) {
-					if(!line.startsWith("#")) {
+					if(!line.startsWith("#") && !line.trim().isEmpty()) {
 						lines.add(line);
 					}
 				}
