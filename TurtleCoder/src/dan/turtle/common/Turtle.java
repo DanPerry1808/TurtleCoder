@@ -2,7 +2,9 @@ package dan.turtle.common;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
+import dan.turtle.instr.BoolInstruction;
 import dan.turtle.instr.Instruction;
 import dan.turtle.instr.InstructionType;
 import dan.turtle.instr.IntInstruction;
@@ -19,6 +21,13 @@ public class Turtle {
 	private int x;
 	private int y;
 	
+	// The coordinates of the turtle at the last place it ended an instruction
+	private int lastX;
+	private int lastY;
+	
+	// List of all lines that the turtle has drawn
+	private ArrayList<int[]> lines;
+	
 	// Pixels per update the turtle travels
 	private int speed;
 	
@@ -29,16 +38,16 @@ public class Turtle {
 	private boolean busy;
 	
 	// Whether the turtle is drawing a line behind it as it moves
-	private boolean penDown = false;
+	private boolean penDown;
 	// Colour of the pen
-	private Color color = Color.RED;
+	private Color colour;
 	
 	// Direction the turtle is facing
 	private Direction dir;
 	
 	// Array of instructions it is currently executing
 	private Instruction[] program;
-	// Index of the above array fo the instruction it is currently executing
+	// Index of the above array of the instruction it is currently executing
 	private int currInstr;
 	
 	/**
@@ -49,8 +58,14 @@ public class Turtle {
 	public Turtle(int x, int y) {
 		this.x = x;
 		this.y = y;
+		lastX = x;
+		lastY = y;
+		lines = new ArrayList<int[]>();
+		
 		speed = 1;
 		dir = Direction.RIGHT;
+		penDown = true;
+		colour = Color.RED;
 		busy = false;
 		currInstr = -1;
 	}
@@ -76,7 +91,6 @@ public class Turtle {
 				if(currInstr == program.length - 1) {
 					program = null;
 				}else {
-					// If not at end of program, run next instruction
 					currInstr++;
 					runInstruction(program[currInstr]);
 				}
@@ -109,6 +123,12 @@ public class Turtle {
 		// Checks if movement completed
 		if(distanceLeft == 0) {
 			busy = false;
+			// If pen is down, save the line to be drawn
+			if(penDown) {
+				lines.add(new int[] {lastX, lastY, x, y});
+			}
+			lastX = x;
+			lastY = y;
 		}
 	}
 	
@@ -127,6 +147,9 @@ public class Turtle {
 			break;
 		case SPEED:
 			setSpeed(((IntInstruction)in).getArg());
+			break;
+		case TPEN:
+			setPenDown(((BoolInstruction)in).getArg());
 			break;
 		}
 	}
@@ -154,12 +177,26 @@ public class Turtle {
 	 * @param g Graphics object to use for drawing
 	 */
 	public void draw(Graphics g) {
+		g.setColor(Color.GREEN);
 		g.fillOval(x, y, WIDTH, WIDTH);
+		g.setColor(colour);
+		for(int[] line : lines) {
+			g.drawLine(line[0], line[1], line[2], line[3]);
+		}
+		if(penDown) {
+			g.drawLine(lastX, lastY, x, y);
+		}
 	}
 	
 	// Gives the turtle a distance to travel in its current direction
 	private void makeMove(int amount) {
 		distanceLeft = amount;
+	}
+	
+	// Sets penDown to the parameter
+	private void setPenDown(boolean newPen) {
+		penDown = newPen;
+		busy = false;
 	}
 	
 	// Turns the turtle the set amount of degrees

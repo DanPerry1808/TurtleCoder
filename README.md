@@ -13,3 +13,4 @@ The turtle reads instructions from .trtl files. Open a text editor, create a new
 - MOVF x - Moves the turtle forward in its current direction by x pixels. The turtle starts facing to the right.
 - TURN x - Rotates the turtle x degrees clockwise. X must be a multiple of 90.
 - SPED x - Changes the speed of the turtle to x pixels per update , equivalent to 60 * x pixels per second
+- TPEN b - Toggles whether the turtle's pen is down (drawing a line behind it) or not. B should be a boolean of values TRUE/true/t/FALSE/false/f

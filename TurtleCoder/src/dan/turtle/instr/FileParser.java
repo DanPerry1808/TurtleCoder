@@ -78,6 +78,8 @@ public class FileParser {
 		case "SPED":
 			// Change speed command
 			return new IntInstruction(InstructionType.SPEED, Integer.parseInt(lineParts[1]));
+		case "TPEN":
+			return new BoolInstruction(InstructionType.TPEN, Boolean.parseBoolean(lineParts[1]));
 		default:
 			System.out.println("Error parsing line: " + line);
 			return null;

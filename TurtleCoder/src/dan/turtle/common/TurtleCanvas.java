@@ -9,6 +9,8 @@ import dan.turtle.instr.Instruction;
 
 public class TurtleCanvas extends Canvas implements Runnable{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private int width;
 	private int height;
 	

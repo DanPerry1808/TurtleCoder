@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 public class Main extends JFrame{
+
+	private static final long serialVersionUID = 1L;
 	
 	private static String TITLE = "Turtle Coder V0.1";
 	public static int WIDTH = 800;
