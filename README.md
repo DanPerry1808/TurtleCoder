@@ -1,10 +1,6 @@
 # TurtleCoder
 A basic turtle program, reads in instructions from a file.
 
-# Todos
-- Allow blank lines, make parser ignore them
-- Add CLI to allow choosing of .trtl file to run
-
 # Download
 TODO: Add file download
 

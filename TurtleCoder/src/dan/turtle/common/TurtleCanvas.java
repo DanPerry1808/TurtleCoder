@@ -30,7 +30,7 @@ public class TurtleCanvas extends Canvas implements Runnable{
 	 * @param width Width of canvas in pixels
 	 * @param height Height of canvas in pixels
 	 */
-	public TurtleCanvas(int width, int height) {
+	public TurtleCanvas(int width, int height, String filename) {
 		this.width = width;
 		this.height = height;
 		
@@ -39,7 +39,7 @@ public class TurtleCanvas extends Canvas implements Runnable{
 		
 		// Creates an array of Instruction objects from the commands in the
 		// test file
-		program = FileParser.parseInstructions("instr/test.trtl");
+		program = FileParser.parseInstructions("instr/" + filename + ".trtl");
 		if(checkVersion(program[0])) {
 			turtle.setProgram(program);
 		}
