@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import dan.turtle.common.Main;
+import javax.swing.JOptionPane;
 
 /**
  * Class of static methods for creating lists of executable
@@ -28,7 +28,7 @@ public class FileParser {
 		
 		// Convert each String into an Instruction and store in arrays
 		for(int i = 0; i < lines.size(); i++) {
-			instr[i] = parseLine(lines.get(i));
+			instr[i] = validInstruction(lines.get(i));
 		}
 		
 		return instr;
@@ -56,48 +56,100 @@ public class FileParser {
 				e.printStackTrace();
 			}
 		} catch (FileNotFoundException e) {
-			System.out.println("Could not locate " + filepath);
+			JOptionPane.showMessageDialog(null, "Could not locate " + filepath);
 			e.printStackTrace();
+			System.exit(0);
 		}
 		
 		return lines;
 		
 	}
 	
-	// Converts a string into an instruction
-	private static Instruction parseLine(String line) {
-		// Splits the line by spaces to get the different parts of the instruction
+	// Checking if a command is valid
+	private static Instruction validInstruction(String line) {
+		// Splitting command into separate parts
 		String[] lineParts = line.split(" ");
 		
-		// Checks through all possible instruction types
-		// lineParts[0] is the first part of the instruction
-		// A 4 character instruction code
-		switch(lineParts[0]) {
-		case "MOVE":
-			// Move forward command
-			return new IntInstruction(InstructionType.MOVE, Integer.parseInt(lineParts[1]));
-		case "TURN":
-			// Turn command
-			return new IntInstruction(InstructionType.TURN, Integer.parseInt(lineParts[1]));
-		case "SPED":
-			// Change speed command
-			return new IntInstruction(InstructionType.SPEED, Integer.parseInt(lineParts[1]));
-		case "TPEN":
-			return new BoolInstruction(InstructionType.TPEN, Boolean.parseBoolean(lineParts[1]));
-		case "VERS":
-			return new IntInstruction(InstructionType.VERSION, Integer.parseInt(lineParts[1]));
-		case "MVTO":
-			int[] args = new int[] {Integer.parseInt(lineParts[1]), Integer.parseInt(lineParts[2])};
-			if(args[0] > Main.WIDTH || args[0] < 0 || args[1] > Main.HEIGHT || args[1] < 0) {
-				System.out.println("ERROR: MVTO command is out of bounds! Cannot parse line:\n" + line);
-				return null;
+		// Check command word
+		if(validCommand(lineParts[0])) {
+			
+			// Check number of parameters
+			InstructionType type = InstructionType.valueOf(lineParts[0]);
+			int numParams = InstructionType.getNumParams(type);
+			if(lineParts.length - 1 == numParams) {
+				
+				// Check type of parameter
+				Object[] params = new Object[numParams];
+				ParameterType pType;
+				for(int i = 1; i < lineParts.length; i++) {
+					pType = ParameterType.getParameterType(type, i);
+					switch(pType) {
+					case INT:
+						if(validInt(lineParts[i])){
+							params[i - 1] = Integer.parseInt(lineParts[i]);
+						}else {
+							errorClose("Invalid integer parameter: " + lineParts[i], line);
+						}
+						break;
+					case BOOL:
+						if(validBool(lineParts[i])) {
+							// Adds current parameter to the list of parameters
+							params[i-1] = Boolean.parseBoolean(lineParts[i]);
+						}else {
+							errorClose("Invalid boolean parameter: " + lineParts[i], line);
+						}
+						break;
+					}
+				}
+				
+				// Once all parameters processed, create the instruction
+				return new Instruction(type, params);
+				
 			}else {
-				return new IntArrInstruction(InstructionType.MOVETO, args);
+				errorClose("Wrong number of parameters for " + lineParts[0], line);
+				return null;
 			}
-		default:
-			System.out.println("Error parsing line: " + line);
+		}else {
+			errorClose("Unrecognised command " + lineParts[0], line);
 			return null;
 		}
 	}
-
+	
+	private static boolean validCommand(String command) {
+		int i = 0;
+		while(i < InstructionType.values().length) {
+			if(InstructionType.valueOf(command) == InstructionType.values()[i]) {
+				return true;
+			}
+			i++;
+		}
+		return false;
+	}
+	
+	// Checks if string is a valid integer
+	private static boolean validInt(String linePart) {
+		try {
+			Integer.parseInt(linePart);
+			return true;
+		}catch(NumberFormatException e) {
+			return false;
+		}
+	}
+	
+	// Displays error message to user, in two parts
+	// Error description and line that caused error
+	// Then closes the program
+	private static void errorClose(String message, String line) {
+		JOptionPane.showMessageDialog(null, message + "\nCannot parse: " + line);
+		System.exit(0);
+	}
+	
+	private static boolean validBool(String linePart) {
+		if(linePart.contentEquals("true") || linePart.equals("false")) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 }

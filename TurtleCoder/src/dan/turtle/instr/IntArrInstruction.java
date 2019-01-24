@@ -1,6 +1,6 @@
 package dan.turtle.instr;
 
-public class IntArrInstruction extends Instruction {
+public class IntArrInstruction extends OldInstruction {
 
 	private int[] args;
 	

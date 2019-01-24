@@ -5,7 +5,7 @@ package dan.turtle.instr;
  * Eg. MOVF 10
  *
  */
-public class IntInstruction extends Instruction {
+public class IntInstruction extends OldInstruction {
 	
 	private int arg;
 

@@ -4,9 +4,10 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import javax.swing.JOptionPane;
+
 import dan.turtle.instr.FileParser;
 import dan.turtle.instr.Instruction;
-import dan.turtle.instr.IntInstruction;
 import dan.turtle.instr.InstructionType;
 
 public class TurtleCanvas extends Canvas implements Runnable{
@@ -40,24 +41,26 @@ public class TurtleCanvas extends Canvas implements Runnable{
 		// Creates an array of Instruction objects from the commands in the
 		// test file
 		program = FileParser.parseInstructions(filename);
-		if(checkVersion(program[0])) {
-			turtle.setProgram(program);
-		}
+		
+		checkVersion(program[0]);
+		turtle.setProgram(program);
+		
 		start();
 	}
 	
 	// Checks if the first command in the program is a VERS command
 	// and if the code is written for the same version as the program
 	private boolean checkVersion(Instruction in) {
-		if(in.getInstructionType() == InstructionType.VERSION) {
-			if(((IntInstruction)in).getArg() == Main.compatVers) {
+		if(in.getInstructionType() == InstructionType.VERS) {
+			if((Integer)(in.getParam(0)) == Main.compatVers) {
 				return true;
 			}else {
-				System.out.println("ERROR: Your code is not at the current compatibility version.\nGet the VERS command at the top of your code and check the GitHub to see any changes");
+				JOptionPane.showMessageDialog(null, "ERROR: Your code is not at the current compatibility version.\nCheck the VERS command at the top of your code and check the GitHub to see any changes");
+				System.exit(0);
 				return false;
 			}
 		}else {
-			System.out.println("WARNING: Your code does not begin with a VERS command.\nYour code my have incompatibilities!");
+			JOptionPane.showMessageDialog(null, "WARNING: Your code does not begin with a VERS command.\nYour code may have incompatibilities!");
 			return true;
 		}
 	}

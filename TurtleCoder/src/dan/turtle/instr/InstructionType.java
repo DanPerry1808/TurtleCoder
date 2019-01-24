@@ -7,8 +7,22 @@ package dan.turtle.instr;
 public enum InstructionType {
 	MOVE,
 	TURN,
-	SPEED,
+	SPED,
 	TPEN,
-	VERSION,
-	MOVETO
+	VERS,
+	MVTO;
+	
+	/**
+	 * @param type The type on instruction you want the number of parameters of
+	 * @return The number of parameters that instruction has
+	 */
+	public static int getNumParams(InstructionType type) {
+		switch(type) {
+		case MVTO:
+			return 2;
+		default:
+			return 1;
+		}
+	}
+	
 }

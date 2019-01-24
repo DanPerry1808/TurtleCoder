@@ -4,7 +4,7 @@ package dan.turtle.instr;
  * Instruction with one boolean parameter
  *
  */
-public class BoolInstruction extends Instruction{
+public class BoolInstruction extends OldInstruction{
 	
 	private boolean arg;
 	

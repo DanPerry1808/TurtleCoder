@@ -4,11 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import dan.turtle.instr.BoolInstruction;
 import dan.turtle.instr.Instruction;
 import dan.turtle.instr.InstructionType;
-import dan.turtle.instr.IntArrInstruction;
-import dan.turtle.instr.IntInstruction;
 
 /**
  * Class for representing the turtle itself
@@ -145,22 +142,24 @@ public class Turtle {
 		// Checks through each type of instruction, calling the appropriate method
 		switch(in.getInstructionType()) {
 		case MOVE:
-			makeMove(((IntInstruction)in).getArg());
+			makeMove((Integer)in.getParam(0));
 			break;
 		case TURN:
-			turn(((IntInstruction)in).getArg());
+			turn((Integer)in.getParam(0));
 			break;
-		case SPEED:
-			setSpeed(((IntInstruction)in).getArg());
+		case SPED:
+			setSpeed((Integer)in.getParam(0));
 			break;
 		case TPEN:
-			setPenDown(((BoolInstruction)in).getArg());
+			setPenDown((Boolean)in.getParam(0));
 			break;
-		case VERSION:
+		case VERS:
 			busy = false;
 			break;
-		case MOVETO:
-			moveTo(((IntArrInstruction)in).getArgs());
+		case MVTO:
+			int x = (Integer)in.getParam(0);
+			int y = (Integer)in.getParam(1);
+			moveTo(x, y);
 			break;
 		}
 	}
@@ -199,11 +198,11 @@ public class Turtle {
 		}
 	}
 	
-	private void moveTo(int[] coords) {
+	private void moveTo(int x, int y) {
 		boolean temp = penDown;
 		penDown = false;
-		x = coords[0];
-		y = coords[1];
+		this.x = x;
+		this.y = y;
 		moveDone();
 		penDown = temp;
 	}
