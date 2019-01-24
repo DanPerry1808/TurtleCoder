@@ -24,7 +24,7 @@ public class Turtle {
 	private int lastY;
 	
 	// List of all lines that the turtle has drawn
-	private ArrayList<int[]> lines;
+	private ArrayList<Line> lines;
 	
 	// Pixels per update the turtle travels
 	private int speed;
@@ -58,7 +58,7 @@ public class Turtle {
 		this.y = y;
 		lastX = x;
 		lastY = y;
-		lines = new ArrayList<int[]>();
+		lines = new ArrayList<Line>();
 		
 		speed = 1;
 		dir = Direction.RIGHT;
@@ -128,7 +128,7 @@ public class Turtle {
 		busy = false;
 		// If pen is down, save the line to be drawn
 		if(penDown) {
-			lines.add(new int[] {lastX, lastY, x, y});
+			lines.add(new Line(lastX, lastY, x, y, colour));
 		}
 		lastX = x;
 		lastY = y;
@@ -161,6 +161,12 @@ public class Turtle {
 			int y = (Integer)in.getParam(1);
 			moveTo(x, y);
 			break;
+		case COLR:
+			int r = (Integer)in.getParam(0);
+			int g = (Integer)in.getParam(1);
+			int b = (Integer)in.getParam(2);
+			colour = new Color(r, g, b);
+			busy = false;
 		}
 	}
 	
@@ -190,10 +196,11 @@ public class Turtle {
 		g.setColor(Color.GREEN);
 		g.fillOval(x, y, WIDTH, WIDTH);
 		g.setColor(colour);
-		for(int[] line : lines) {
-			g.drawLine(line[0], line[1], line[2], line[3]);
+		for(Line l : lines) {
+			l.draw(g);
 		}
 		if(penDown) {
+			g.setColor(colour);
 			g.drawLine(lastX, lastY, x, y);
 		}
 	}

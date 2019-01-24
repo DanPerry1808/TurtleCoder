@@ -23,4 +23,5 @@ To run your .trtl file, double click the Turtle.jar file and select the file you
 - `MVTO x y` - Moves the turtle to those coordinates (minimum value of zero, maximum value of 800)
 - `SPED x` - Changes the speed of the turtle to x pixels per update , equivalent to 60 * x pixels per second
 - `TPEN b` - Toggles whether the turtle's pen is down (drawing a line behind it) or not. B should be a boolean of values `true` or `false`
+- `COLR r g b` - Sets the pen colour to the RGB colour set in the parameter
 - `# ...` - Turns the line into a comment. The parser will ignore the rest of the line

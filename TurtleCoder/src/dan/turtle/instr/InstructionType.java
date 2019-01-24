@@ -10,7 +10,8 @@ public enum InstructionType {
 	SPED,
 	TPEN,
 	VERS,
-	MVTO;
+	MVTO,
+	COLR;
 	
 	/**
 	 * @param type The type on instruction you want the number of parameters of
@@ -20,6 +21,8 @@ public enum InstructionType {
 		switch(type) {
 		case MVTO:
 			return 2;
+		case COLR:
+			return 3;
 		default:
 			return 1;
 		}
