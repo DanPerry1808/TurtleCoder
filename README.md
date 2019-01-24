@@ -11,7 +11,7 @@ The turtle reads instructions from .trtl files. Open a text editor, create a new
 ## Starting your code
 The first instruction in your .trtl file should be the VERS command, which the program checks to make sure there are no compatibility issues with your code if it is from an old version. For information about updating your old code for a new version, check [the wiki page](https://github.com/DanPerry1808/TurtleCoder/wiki/Compatibility-Version-Information)
 
-**Current Compatibility Version = 2**
+**Current Compatibility Version = 3**
 
 ## Instruction set
 - `VERS x` - Tells the parser which version of the program your code is written for
