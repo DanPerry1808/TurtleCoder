@@ -39,7 +39,7 @@ public class TurtleCanvas extends Canvas implements Runnable{
 		
 		// Creates an array of Instruction objects from the commands in the
 		// test file
-		program = FileParser.parseInstructions("instr/" + filename + ".trtl");
+		program = FileParser.parseInstructions(filename);
 		if(checkVersion(program[0])) {
 			turtle.setProgram(program);
 		}

@@ -4,9 +4,9 @@ import java.awt.Dimension;
 import java.io.File;
 import java.util.Scanner;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-
-import dan.turtle.instr.FileParser;
+import javax.swing.filechooser.FileSystemView;
 
 public class Main extends JFrame{
 
@@ -37,62 +37,17 @@ public class Main extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		System.out.println("--Welcome to TurtleCoder--");
-		System.out.println();
-		printHelp();
-		
-		// Continually checks user input until they choose to quit
-		sc = new Scanner(System.in);
-		String input = "";
-		while(input != "Q") {
-			input = sc.nextLine();
-			// Checks which command they entered
-			switch(input.charAt(0)) {
-			case 'R':
-				// Checks file exists before trying to load it
-				String filename = input.split(" ")[1];
-				File f = new File("./instr/" + filename + ".trtl");
-				if(f.exists()) {
-					new Main(filename);
-				}else {
-					System.out.println("ERROR: " + filename + ".trtl does not exist!");
-				}
-				break;
-			case 'L':
-				printFiles();
-				break;
-			case 'H':
-				printHelp();
-				break;
-			case 'Q':
-				break;
-			default:
-				System.out.println("Invalid command, type H to display command list");
-				break;
+		FileSystemView fsv = FileSystemView.getFileSystemView();
+		JFileChooser fc = new JFileChooser("./instr/", fsv);
+		String filename = null;
+		while(filename == null) {
+			int output = fc.showOpenDialog(null);
+			if(output == JFileChooser.APPROVE_OPTION) {
+				filename = fc.getSelectedFile().getAbsolutePath();
 			}
 		}
-		sc.close();
-	}
-	
-	// Prints the names of all files in the /instr/ folder
-	private static void printFiles() {
-		File[] files = new File("./instr/").listFiles();
-		
-		// Checks if folder doesn't exit and outputs error message if true
-		if(files == null) {
-			System.out.println("You seem to have deleted your /instr/ folder.");
-		}else {
-			// Checks number of files in folder
-			if(files.length == 0) {
-				System.out.println("WARNING: No .trtl files to display.\nMake sure they are in the /instr folder.");
-			}else {
-				for (File file : files) {
-				    if (file.isFile()) {
-				        System.out.println(file.getName());
-				    }
-				}
-			}
-		}
+		new Main(filename);
+
 	}
 	
 	// Prints all possible commands
