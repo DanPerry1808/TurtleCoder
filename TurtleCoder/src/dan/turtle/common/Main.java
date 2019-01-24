@@ -27,7 +27,7 @@ public class Main extends JFrame{
 		setSize(WIDTH, HEIGHT);
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setTitle(TITLE);
 		// Adds the canvas object to the screen
@@ -48,17 +48,6 @@ public class Main extends JFrame{
 		}
 		new Main(filename);
 
-	}
-	
-	// Prints all possible commands
-	private static void printHelp() {
-		System.out.println();
-		System.out.println("Please select one of the following options: ");
-		System.out.println("R ... - Run the file with the given name");
-		System.out.println("L - List all files in the directory");
-		System.out.println("H - Reprint this help text");
-		System.out.println("Q - Quit the program");
-		System.out.println("");
 	}
 
 }

@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import dan.turtle.common.Main;
+
 /**
  * Class of static methods for creating lists of executable
  * instruction objects from .trtl files
@@ -84,6 +86,14 @@ public class FileParser {
 			return new BoolInstruction(InstructionType.TPEN, Boolean.parseBoolean(lineParts[1]));
 		case "VERS":
 			return new IntInstruction(InstructionType.VERSION, Integer.parseInt(lineParts[1]));
+		case "MVTO":
+			int[] args = new int[] {Integer.parseInt(lineParts[1]), Integer.parseInt(lineParts[2])};
+			if(args[0] > Main.WIDTH || args[0] < 0 || args[1] > Main.HEIGHT || args[1] < 0) {
+				System.out.println("ERROR: MVTO command is out of bounds! Cannot parse line:\n" + line);
+				return null;
+			}else {
+				return new IntArrInstruction(InstructionType.MOVETO, args);
+			}
 		default:
 			System.out.println("Error parsing line: " + line);
 			return null;

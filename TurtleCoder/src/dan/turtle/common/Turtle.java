@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import dan.turtle.instr.BoolInstruction;
 import dan.turtle.instr.Instruction;
 import dan.turtle.instr.InstructionType;
+import dan.turtle.instr.IntArrInstruction;
 import dan.turtle.instr.IntInstruction;
 
 /**
@@ -122,14 +123,18 @@ public class Turtle {
 		
 		// Checks if movement completed
 		if(distanceLeft == 0) {
-			busy = false;
-			// If pen is down, save the line to be drawn
-			if(penDown) {
-				lines.add(new int[] {lastX, lastY, x, y});
-			}
-			lastX = x;
-			lastY = y;
+			moveDone();
 		}
+	}
+	
+	private void moveDone() {
+		busy = false;
+		// If pen is down, save the line to be drawn
+		if(penDown) {
+			lines.add(new int[] {lastX, lastY, x, y});
+		}
+		lastX = x;
+		lastY = y;
 	}
 	
 	// Makes the turtle execute the next instruction
@@ -153,6 +158,9 @@ public class Turtle {
 			break;
 		case VERSION:
 			busy = false;
+			break;
+		case MOVETO:
+			moveTo(((IntArrInstruction)in).getArgs());
 			break;
 		}
 	}
@@ -189,6 +197,15 @@ public class Turtle {
 		if(penDown) {
 			g.drawLine(lastX, lastY, x, y);
 		}
+	}
+	
+	private void moveTo(int[] coords) {
+		boolean temp = penDown;
+		penDown = false;
+		x = coords[0];
+		y = coords[1];
+		moveDone();
+		penDown = temp;
 	}
 	
 	// Gives the turtle a distance to travel in its current direction

@@ -1,4 +1,5 @@
-# Test code file
+# Example Turtle code file
+# Written by Dan Perry
 VERS 2
 
 MOVE 100
@@ -6,6 +7,7 @@ TURN -90
 MOVE 100
 TURN -90
 SPED 3
+MVTO 500 500
 MOVE 100
 TURN -90
 MOVE 100

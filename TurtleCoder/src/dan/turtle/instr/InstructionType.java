@@ -9,5 +9,6 @@ public enum InstructionType {
 	TURN,
 	SPEED,
 	TPEN,
-	VERSION
+	VERSION,
+	MOVETO
 }
