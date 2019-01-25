@@ -153,9 +153,6 @@ public class Turtle {
 		case TPEN:
 			setPenDown((Boolean)in.getParam(0));
 			break;
-		case VERS:
-			busy = false;
-			break;
 		case MVTO:
 			int x = (Integer)in.getParam(0);
 			int y = (Integer)in.getParam(1);

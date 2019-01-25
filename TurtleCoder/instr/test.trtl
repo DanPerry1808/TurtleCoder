@@ -1,7 +1,5 @@
 # Example Turtle code file
 # Written by Dan Perry
-VERS 3
-
 MOVE 100
 TURN -90
 MOVE 100

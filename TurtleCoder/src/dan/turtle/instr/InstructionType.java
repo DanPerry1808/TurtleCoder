@@ -9,7 +9,6 @@ public enum InstructionType {
 	TURN,
 	SPED,
 	TPEN,
-	VERS,
 	MVTO,
 	COLR;
 	
