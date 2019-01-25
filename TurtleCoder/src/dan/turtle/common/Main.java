@@ -10,11 +10,7 @@ public class Main extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	
-	// Compatibility version of the code
-	// This number will be changed whenever the code is changed
-	// in a way that invalidates old code
-	public static int compatVers = 3;
-	private static String TITLE = "Turtle Coder V0.1";
+	private static String TITLE = "Turtle Coder V1.0";
 	public static int WIDTH = 800;
 	public static int HEIGHT = 800;
 	
