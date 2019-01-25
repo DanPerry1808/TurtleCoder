@@ -1,12 +1,9 @@
 # TurtleCoder
 A basic turtle program, reads in instructions from a file.
 
-# Download
-TODO: Add file download
-
 # How to use
 ## Download and installation
-Download the file from the link above, extract everything from the zip file into its own folder. To run the program, double click the Turtle.jar file.
+Download the file from the Releases section of the page, extract everything from the zip file into its own folder. To run the program, double click the Turtle.jar file.
 ## Creating a .trtl file
 The turtle reads instructions from .trtl files. Open a text editor, create a new file and the save as FILENAME.trtl inside the /instr/ folder. Note: on Windows, you will need to put the filename in quotes to have it save as a trtl extension.
 ## Coding the turtle
